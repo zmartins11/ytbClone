@@ -1,0 +1,12 @@
+<div class="file-container" *ngIf="!file">
+    <input type="file" (change)="getFile($event)" class="file">
+</div>
+
+
+<div *ngIf="file">
+    File Name: {{file.name}} <br />
+    <button (click)="file = undefined">Clear File</button>
+</div> <br />
+
+<button mat-button (click)="uploadFile()">Upload file</button>
+
