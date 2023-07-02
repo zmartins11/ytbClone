@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
@@ -10,7 +11,8 @@ export class UploadVideoComponent implements OnInit {
 
   file: any;
 
-  constructor(private videoService : VideoService) { }
+  constructor(private videoService : VideoService,
+    private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,7 +26,7 @@ export class UploadVideoComponent implements OnInit {
   uploadFile() {
     if(this.file != undefined) {
       this.videoService.uploadVideo(this.file).subscribe(data => {
-        console.log("Video upload successfully");
+        this.router.navigateByUrl("/save-video-details/" + data.videoId)
       });
     }
   }
