@@ -17,6 +17,9 @@ import { MatSelectModule} from '@angular/material/select';
 import { MatOptionModule} from '@angular/material/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatChipsModule } from '@angular/material/chips';
+import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 
 @NgModule({
@@ -39,7 +42,10 @@ import { MatButtonModule } from '@angular/material/button';
     MatOptionModule,
     ReactiveFormsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatOptionModule,
+    MatChipsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
