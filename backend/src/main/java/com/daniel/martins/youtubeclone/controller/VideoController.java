@@ -32,4 +32,10 @@ public class VideoController {
     public String uploadThumbnail(@RequestParam("file")MultipartFile file, @RequestParam("videoId") String videoId) {
         return videoService.uploadThumbnail(file, videoId);
     }
+
+    @GetMapping("/{videoId}")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto getVideoDetails(@PathVariable String videoId) {
+        return videoService.getVideoDetails(videoId);
+    }
 }

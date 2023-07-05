@@ -19,6 +19,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import {VgCoreModule} from '@videogular/ngx-videogular/core';
+import {VgControlsModule} from '@videogular/ngx-videogular/controls';
+import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
+import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
+import { VideoPlayerComponent } from './components/video-player/video-player.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -45,7 +51,13 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
     MatButtonModule,
     MatOptionModule,
     MatChipsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule,
+    FormsModule,
+    VideoPlayerComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -4,6 +4,7 @@ import { MatChipInputEvent } from '@angular/material/chips';
 import { ActivatedRoute } from '@angular/router';
 import { VideoService } from 'src/app/services/video.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
+import { VideoPlayerComponent } from '../video-player/video-player.component';
 
 @Component({
   selector: 'app-save-video-details',
@@ -26,6 +27,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   selectedFileName = '';
   videoId = '';
   fileSelected = false;
+  videoUrl! : string;
 
 
    
@@ -33,6 +35,9 @@ export class SaveVideoDetailsComponent implements OnInit {
      private videoService : VideoService,
      private matSnackBar: MatSnackBar) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
+    this.videoService.getVideo(this.videoId).subscribe(data => {
+    this.videoUrl =data.videoUrl;
+    })
     this.saveVideoDetailsForm = new FormGroup({
       title : this.title,
       description : this.description,
@@ -77,5 +82,7 @@ export class SaveVideoDetailsComponent implements OnInit {
       this.matSnackBar.open('Thumbnail Upload Successful', 'OK');
     })
   }
+
+
 
 }

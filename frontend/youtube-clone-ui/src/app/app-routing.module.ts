@@ -4,12 +4,9 @@ import { UploadVideoComponent } from './components/upload-video/upload-video.com
 import { SaveVideoDetailsComponent } from './components/save-video-details/save-video-details.component';
 
 const routes: Routes = [
-  {
-    path:'upload-video', component: UploadVideoComponent,
-  }, 
-  {
-    path:'save-video-details/:videoId', component: SaveVideoDetailsComponent
-  }
+  {path:'upload-video', component: UploadVideoComponent}, 
+  {path:'save-video-details/:videoId', component: SaveVideoDetailsComponent},
+  
 ];
 
 @NgModule({
