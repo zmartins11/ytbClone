@@ -23,10 +23,7 @@ export class VideoPlayerComponent implements OnInit {
   videoUrl! : string | '';
   constructor() { }
 
-  videoUrlTest: string = 'assets/videos/sample.mp4';
-
   ngOnInit(): void {
-    console.log(this.videoUrlTest);
   }
 
 
