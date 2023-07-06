@@ -25,6 +25,7 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { FormsModule } from '@angular/forms';
+import { AuthConfigModule } from './auth/auth-config.module';
 
 
 
@@ -57,7 +58,8 @@ import { FormsModule } from '@angular/forms';
     VgOverlayPlayModule,
     VgBufferingModule,
     FormsModule,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    AuthConfigModule
   ],
   providers: [],
   bootstrap: [AppComponent]

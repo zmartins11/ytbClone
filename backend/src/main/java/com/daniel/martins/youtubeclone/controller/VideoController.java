@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RestController
 @RequestMapping("/api/videos")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class VideoController {
 
     private final VideoService videoService;

@@ -39,7 +39,7 @@ export class SaveVideoDetailsComponent implements OnInit {
      private matSnackBar: MatSnackBar) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
-    this.videoUrl =data.videoUrl;
+    this.videoUrl = data.videoUrl;
     this.thumbnailUrl = data.thumbnailUrl;
     })
     this.saveVideoDetailsForm = new FormGroup({
@@ -88,7 +88,7 @@ export class SaveVideoDetailsComponent implements OnInit {
   }
 
   saveVideo() {
-    //call the video service to amke a http call to our backend
+    //call the video service to make a http call to our backend
     const videoMetadata : VideoDto = {
       "id": this.videoId,
       "title" : this.saveVideoDetailsForm.get('title')?.value,

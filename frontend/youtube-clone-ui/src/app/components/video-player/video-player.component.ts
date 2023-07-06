@@ -24,6 +24,7 @@ export class VideoPlayerComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.videoUrl);
   }
 
 

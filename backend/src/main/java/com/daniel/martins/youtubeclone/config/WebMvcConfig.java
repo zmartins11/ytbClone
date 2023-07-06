@@ -9,11 +9,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebMvcConfig implements WebMvcConfigurer {
 
 
-    public void addCorsMapping(CorsRegistry corsRegistry) {
-        corsRegistry.addMapping("/**")
-                .allowedOrigins("*")
-                .allowedMethods("GET","PUT", "DELETE", "PATCH", "OPTIONS")
-                .allowedHeaders("*")
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:4200")
+                .allowedMethods("GET", "POST", "PUT", "DELETE")
+                .allowedHeaders("Content-Type")
+                .allowCredentials(false)
                 .maxAge(3600);
     }
 }
