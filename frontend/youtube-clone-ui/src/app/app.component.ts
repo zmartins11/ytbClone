@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
+
 
 @Component({
   selector: 'app-root',
@@ -8,15 +8,10 @@ import { LoginResponse, OidcSecurityService } from 'angular-auth-oidc-client';
 })
 export class AppComponent implements OnInit {
 
-  constructor (private oidcSecurityService: OidcSecurityService ) {
+  constructor () {
   }
 
   ngOnInit(): void {
-    this.oidcSecurityService.checkAuth().subscribe((loginResponse: LoginResponse) => {
-      const { isAuthenticated} = loginResponse;
-      console.log('app is authenticated', isAuthenticated)
-      /*...*/
-    });
   }
   title = 'youtube-clone-ui';
 }

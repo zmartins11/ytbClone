@@ -7,6 +7,7 @@ import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
 import { VideoDto } from 'src/app/video-dto';
 import { textChangeRangeIsUnchanged } from 'typescript';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-save-video-details',
@@ -32,11 +33,11 @@ export class SaveVideoDetailsComponent implements OnInit {
   videoUrl! : string;
   thumbnailUrl! :string;
 
-
    
   constructor(private activatedRoute : ActivatedRoute,
      private videoService : VideoService,
-     private matSnackBar: MatSnackBar) {
+     private matSnackBar: MatSnackBar,
+     private http : HttpClient) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
     this.videoUrl = data.videoUrl;

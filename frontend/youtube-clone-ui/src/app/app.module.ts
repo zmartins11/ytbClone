@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UploadVideoComponent } from './components/upload-video/upload-video.component';
 import { HeaderComponent } from './components/header/header.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -25,7 +25,7 @@ import {VgOverlayPlayModule} from '@videogular/ngx-videogular/overlay-play';
 import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { FormsModule } from '@angular/forms';
-import { AuthConfigModule } from './auth/auth-config.module';
+import { AuthService } from './services/auth.service';
 
 
 
@@ -58,10 +58,9 @@ import { AuthConfigModule } from './auth/auth-config.module';
     VgOverlayPlayModule,
     VgBufferingModule,
     FormsModule,
-    VideoPlayerComponent,
-    AuthConfigModule
+    VideoPlayerComponent
   ],
-  providers: [],
+ 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
