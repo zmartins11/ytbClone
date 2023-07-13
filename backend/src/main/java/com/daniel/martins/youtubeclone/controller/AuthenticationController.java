@@ -33,8 +33,4 @@ public class AuthenticationController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/login")
-    public String test() {
-        return "teste";
-    }
 }

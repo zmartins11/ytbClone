@@ -50,9 +50,7 @@ public class AuthenticationConfig  {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/api/login").permitAll();
-                    auth.requestMatchers(HttpMethod.POST);
-                    auth.requestMatchers("/ADMIN").hasRole("ADMIN");
+                    auth.requestMatchers("/api/login").permitAll().anyRequest().authenticated();
                 })
                 .httpBasic(withDefaults())
                 .addFilterBefore(sessionFilter, UsernamePasswordAuthenticationFilter.class)

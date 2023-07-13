@@ -1,5 +1,6 @@
 package com.daniel.martins.youtubeclone.user;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +11,7 @@ public class CurrentUserService implements UserDetailsService {
 
     private final UserInMemoryRepository repository;
 
+    @Autowired
     public CurrentUserService(UserInMemoryRepository repository) {
         this.repository = repository;
     }

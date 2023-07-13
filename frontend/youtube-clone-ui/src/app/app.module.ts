@@ -26,6 +26,9 @@ import {VgBufferingModule} from '@videogular/ngx-videogular/buffering';
 import { VideoPlayerComponent } from './components/video-player/video-player.component';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { RequestInterceptor } from './request.interceptor';
 
 
 
@@ -34,7 +37,9 @@ import { AuthService } from './services/auth.service';
     AppComponent,
     UploadVideoComponent,
     HeaderComponent,
-    SaveVideoDetailsComponent
+    SaveVideoDetailsComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,7 @@ import { AuthService } from './services/auth.service';
     FormsModule,
     VideoPlayerComponent
   ],
- 
+  providers: [{provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
