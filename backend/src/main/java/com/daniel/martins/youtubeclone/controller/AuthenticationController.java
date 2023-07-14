@@ -2,13 +2,11 @@ package com.daniel.martins.youtubeclone.controller;
 
 import com.daniel.martins.youtubeclone.dto.ResponseDto;
 import com.daniel.martins.youtubeclone.dto.UserDto;
-import com.daniel.martins.youtubeclone.session.InMemorySessionRegistry;
+import com.daniel.martins.youtubeclone.session.SessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,7 +16,7 @@ public class AuthenticationController {
     @Autowired
     public AuthenticationManager manager;
     @Autowired
-    public InMemorySessionRegistry sessionRegistry;
+    public SessionRegistry sessionRegistry;
 
 
     @PostMapping("/login")

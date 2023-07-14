@@ -2,14 +2,12 @@ package com.daniel.martins.youtubeclone.session;
 
 
 import com.daniel.martins.youtubeclone.user.CurrentUser;
-import com.daniel.martins.youtubeclone.user.CurrentUserService;
+import com.daniel.martins.youtubeclone.service.CurrentUserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.websocket.Session;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,11 +20,11 @@ import java.io.IOException;
 @Component
 public class SessionFilter extends OncePerRequestFilter {
 
-    private final InMemorySessionRegistry sessionRegistry;
+    private final SessionRegistry sessionRegistry;
     private final CurrentUserService currentUserService;
 
     @Autowired
-    public SessionFilter(final InMemorySessionRegistry sessionRegistry, CurrentUserService currentUserService) {
+    public SessionFilter(final SessionRegistry sessionRegistry, CurrentUserService currentUserService) {
         this.sessionRegistry = sessionRegistry;
         this.currentUserService = currentUserService;
     }
