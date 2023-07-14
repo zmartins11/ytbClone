@@ -29,6 +29,7 @@ import { AuthService } from './services/auth.service';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RequestInterceptor } from './request.interceptor';
+import { VideoDetailComponent } from './components/video-detail/video-detail.component';
 
 
 
@@ -39,7 +40,8 @@ import { RequestInterceptor } from './request.interceptor';
     HeaderComponent,
     SaveVideoDetailsComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    VideoDetailComponent
   ],
   imports: [
     BrowserModule,
