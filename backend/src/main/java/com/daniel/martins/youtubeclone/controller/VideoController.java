@@ -36,7 +36,19 @@ public class VideoController {
 
     @GetMapping("/{videoId}")
     @ResponseStatus(HttpStatus.OK)
-    public VideoDto getVideoDetails(@PathVariable String videoId) {
-        return videoService.getVideoDetails(videoId);
+    public VideoDto getVideoDetails(@PathVariable String videoId, @RequestHeader String sessionId) {
+        return videoService.getVideoDetails(videoId, sessionId);
+    }
+
+    @PostMapping("/{videoId}/like")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto likeVideo(@PathVariable String videoId, @RequestHeader String sessionId ) {
+        return videoService.likeVideo(videoId, sessionId);
+    }
+
+    @PostMapping("/{videoId}/dislike/{currentUser}")
+    @ResponseStatus(HttpStatus.OK)
+    public VideoDto dislikeVideo(@PathVariable String videoId, @RequestHeader String sessionId ) {
+        return videoService.dislikeVideo(videoId, sessionId);
     }
 }

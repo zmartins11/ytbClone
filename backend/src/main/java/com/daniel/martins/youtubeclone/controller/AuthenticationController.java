@@ -27,6 +27,7 @@ public class AuthenticationController {
         final String sessionId  = sessionRegistry.registerSession(user.getUsername());
         ResponseDto response = new ResponseDto();
         response.setSessionId(sessionId);
+        response.setUsername(user.getUsername());
 
         return ResponseEntity.ok(response);
     }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Document(value = "User")
 @Data
@@ -23,9 +24,45 @@ public class User {
     private String lastName;
     private String fullName;
     private String emailAddress;
-    private Set<String> subscribedToUsers;
-    private Set<String> subscribers;
-    private List<String> videoHistory;
-    private Set<String> likeVideos;
-    private Set<String> dislikeVideos;
+    private Set<String> subscribedToUsers = ConcurrentHashMap.newKeySet();;
+    private Set<String> subscribers = ConcurrentHashMap.newKeySet();;
+    private Set<String> videoHistory = ConcurrentHashMap.newKeySet();
+    private Set<String> likeVideos = ConcurrentHashMap.newKeySet();
+    private Set<String> dislikeVideos = ConcurrentHashMap.newKeySet();
+
+    public void addToLikeVideos(String videoId) {
+        likeVideos.add(videoId);
+    }
+
+    public void removeFromLikedVideos(String videoId) {
+        likeVideos.remove(videoId);
+    }
+
+    public void removeFromDislikeVideos(String videoId) {
+        dislikeVideos.remove(videoId);
+    }
+
+    public void addToDislikeVideos(String videoId) {
+        dislikeVideos.add(videoId);
+    }
+
+    public void addToVideoHistory(String videoId) {
+        videoHistory.add(videoId);
+    }
+
+    public void addToSubscribedToUsers(String userId) {
+        subscribedToUsers.add(userId);
+    }
+
+    public void addToSubscribers(String userId) {
+        subscribers.add(userId);
+    }
+
+    public void removeFromSubscribedToUsers(String userId) {
+        subscribedToUsers.remove(userId);
+    }
+
+    public void removeFromSubscribers(String userId) {
+        subscribers.remove(userId);
+    }
 }
