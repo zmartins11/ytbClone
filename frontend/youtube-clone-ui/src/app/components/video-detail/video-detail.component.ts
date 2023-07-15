@@ -16,6 +16,9 @@ export class VideoDetailComponent implements OnInit {
   videoDescription! : string;
   tags: Array<string> = [];
   videoAvailable: boolean = false;
+  likeCount: number = 0;
+  dislikeCount : number = 0;
+  viewCount : number = 0;
 
   constructor(private activatedRoute:  ActivatedRoute,
               private videoService: VideoService) {
@@ -26,10 +29,27 @@ export class VideoDetailComponent implements OnInit {
       this.videoDescription = data.description;
       this.tags = data.tags;
       this.videoAvailable = true;
+      this.likeCount = data.likeCount;
+      this.dislikeCount = data.dislikeCount;
+      this.viewCount = data.viewCount;
       })
    }
 
   ngOnInit(): void {
+  }
+
+  likeVideo() {
+    this.videoService.likeVideo(this.videoId).subscribe(data => {
+      this.likeCount = data.likeCount;
+      this.dislikeCount = data.dislikeCount;
+    });
+  }
+
+  disLikeVideo() {
+    this.videoService.dislikeVideo(this.videoId).subscribe(data => {
+      this.likeCount = data.likeCount;
+      this.dislikeCount = data.dislikeCount;
+    });
   }
 
 }

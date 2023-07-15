@@ -50,7 +50,7 @@ public class VideoController {
         return videoService.likeVideo(videoId, sessionId);
     }
 
-    @PostMapping("/{videoId}/dislike/{currentUser}")
+    @PostMapping("/{videoId}/dislike")
     @ResponseStatus(HttpStatus.OK)
     public VideoDto dislikeVideo(@PathVariable String videoId, @RequestHeader String sessionId ) {
         return videoService.dislikeVideo(videoId, sessionId);

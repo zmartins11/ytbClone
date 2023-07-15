@@ -122,10 +122,12 @@ public class VideoService {
 
 
 
-    public VideoDto dislikeVideo(String videoId, String currentUser) {
+    public VideoDto dislikeVideo(String videoId, String sessionId) {
 
         //get video by id
         Video videoById = getVideoById(videoId);
+
+        String currentUser = sessionRegistry.getUsernameForSession(sessionId);
 
         if(userService.ifDislikeVideo(videoId, currentUser)) {
             videoById.decrementDisLikes();
