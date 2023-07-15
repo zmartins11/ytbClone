@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -8,16 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router) {
+    this.router.navigateByUrl('/featured');
+   }
 
   ngOnInit(): void {
-    this.http.get<any>('/api/list').subscribe(res => {
-      if (res) {
-        console.log('List ', res);
-      } else {
-          alert("Failed to query list.")
-      }
-    });
   }
 
 }

@@ -30,6 +30,15 @@ import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
 import { RequestInterceptor } from './request.interceptor';
 import { VideoDetailComponent } from './components/video-detail/video-detail.component';
+import { HistoryComponent } from './components/history/history.component';
+import { LikedVideosComponent } from './components/liked-videos/liked-videos.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SubscriptionsComponent } from './components/subscriptions/subscriptions.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { FeaturedComponent } from './components/featured/featured.component';
+import { VideoCardComponent } from './components/video-card/video-card.component';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -41,7 +50,13 @@ import { VideoDetailComponent } from './components/video-detail/video-detail.com
     SaveVideoDetailsComponent,
     LoginComponent,
     HomeComponent,
-    VideoDetailComponent
+    VideoDetailComponent,
+    HistoryComponent,
+    LikedVideosComponent,
+    SidebarComponent,
+    SubscriptionsComponent,
+    FeaturedComponent,
+    VideoCardComponent
   ],
   imports: [
     BrowserModule,
@@ -65,7 +80,10 @@ import { VideoDetailComponent } from './components/video-detail/video-detail.com
     VgOverlayPlayModule,
     VgBufferingModule,
     FormsModule,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    MatSidenavModule,
+    MatListModule,
+    MatCardModule
   ],
   providers: [{provide: HTTP_INTERCEPTORS, useClass: RequestInterceptor, multi: true}],
   bootstrap: [AppComponent]

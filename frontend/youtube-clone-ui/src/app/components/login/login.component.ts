@@ -28,16 +28,10 @@ export class LoginComponent implements OnInit {
   }).subscribe(res => {
       if (res) {
         this.sessionId = res.sessionId;
-        this.username = res.username;
-
         sessionStorage.setItem(
           'token',
           this.sessionId
         )
-        sessionStorage.setItem(
-          'username',
-          this.username
-        );
         this.router.navigate(['']);
       } else {
           alert("Authentication failed.")

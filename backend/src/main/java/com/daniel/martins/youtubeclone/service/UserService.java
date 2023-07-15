@@ -6,6 +6,8 @@ import com.daniel.martins.youtubeclone.session.SessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -85,5 +87,11 @@ public class UserService {
         //save the users
         userRepository.save(currentUser);
         userRepository.save(userSubscribed);
+    }
+
+    public Set<String> userHistory(String userId, String sessionId) {
+        String currentUsername = sessionRegistry.getUsernameForSession(sessionId);
+        User currentUser = getCurrentUser(currentUsername);
+        return currentUser.getVideoHistory();
     }
 }
