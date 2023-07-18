@@ -3,7 +3,7 @@ package com.daniel.martins.youtubeclone.dto;
 public class ResponseDto {
 
     private String sessionId;
-    private String username;
+    private String userId;
 
     public String getSessionId() {
         return sessionId;
@@ -13,11 +13,11 @@ public class ResponseDto {
         this.sessionId = sessionId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 }

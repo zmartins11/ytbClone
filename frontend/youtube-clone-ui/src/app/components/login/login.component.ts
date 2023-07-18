@@ -26,22 +26,19 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model.username, this.model.password).subscribe(data => {
       if (data) {
         this.sessionId = data.sessionId;
-        this.userName = data.username;
-
+        this.authService.setAuthenticationStatus(true);
+        this.authService.setUsername(this.model.username);
+        this.authService.setUserId(data.userId);
+          console.log("sessiondId : " + this.sessionId);
         sessionStorage.setItem(
           'token',
           this.sessionId
         )
-
-        sessionStorage.setItem(
-          'username',
-          this.userName
-        )
-        this.authService.setAuthenticationStatus(true);
-        this.authService.setUsername(this.userName);
+        
         this.router.navigate(['']);
       } else {
-        alert("Authentication failed.")
+        alert("Authentication failed.");
+        console.log("Authentication failed.");
       }
     })
   }

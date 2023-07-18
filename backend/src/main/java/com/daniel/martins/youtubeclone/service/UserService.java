@@ -94,4 +94,6 @@ public class UserService {
         User currentUser = getCurrentUser(currentUsername);
         return currentUser.getVideoHistory();
     }
+
+
 }

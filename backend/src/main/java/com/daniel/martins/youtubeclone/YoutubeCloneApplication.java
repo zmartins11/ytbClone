@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @ComponentScan(basePackages = "com.daniel.martins.youtubeclone")
-public class YoutubeCloneApplication implements ApplicationRunner {
+public class YoutubeCloneApplication {
 
 	private final UserRepository userRepo;
 
@@ -24,12 +24,12 @@ public class YoutubeCloneApplication implements ApplicationRunner {
 		SpringApplication.run(YoutubeCloneApplication.class, args);
 	}
 
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
+//	@Override
+//	public void run(ApplicationArguments args) throws Exception {
 //		User user = new User();
-//		user.setUsername("user1");
+//		user.setUsername("user2");
 //		user.setPassword("$2a$10$4EvCE3wPMBPYEV/FA8B.3e1mrlCGaVuq.cO0x0fmrt198H61q/dFG");
 //		userRepo.save(user);
-
-	}
+//
+//	}
 }

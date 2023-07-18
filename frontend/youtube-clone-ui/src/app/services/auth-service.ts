@@ -10,7 +10,9 @@ export class AuthService {
 
 
   isAuthenticated: boolean = false;
-    username: string = '';
+    private username: string = '';
+    private userId: string = '';
+
     authenticationStatusChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   setAuthenticationStatus(status: boolean): void {
@@ -41,5 +43,13 @@ export class AuthService {
     
       getUsername(): string {
         return this.username;
+      }
+
+      getUserId() : string {
+        return this.userId;
+      }
+
+      setUserId(userId : string) : void {
+        this.userId = userId;
       }
 }

@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit {
 
   isAuthenticated : boolean = false
   username: string = '';
+  userId : string ='';
 
   constructor(private authService : AuthService,
               private route: Router) { }
@@ -26,7 +27,13 @@ export class HeaderComponent implements OnInit {
     this.username = this.authService.getUsername();
     if(this.username != '') {
       this.isAuthenticated = true;
+      this.userId = this.authService.getUserId();
+      console.log(this.username);
+      console.log(this.userId);
     }
+
+   
+    
   }
 
   logout() {

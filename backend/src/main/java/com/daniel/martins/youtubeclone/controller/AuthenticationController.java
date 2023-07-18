@@ -2,6 +2,8 @@ package com.daniel.martins.youtubeclone.controller;
 
 import com.daniel.martins.youtubeclone.dto.ResponseDto;
 import com.daniel.martins.youtubeclone.dto.UserDto;
+import com.daniel.martins.youtubeclone.model.User;
+import com.daniel.martins.youtubeclone.service.UserService;
 import com.daniel.martins.youtubeclone.session.SessionRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,16 +20,25 @@ public class AuthenticationController {
     @Autowired
     public SessionRegistry sessionRegistry;
 
+    @Autowired
+    UserService userService;
+
 
     @PostMapping("/login")
-    public ResponseEntity<ResponseDto> login(@RequestBody UserDto user) {
+    public ResponseEntity<ResponseDto> login(@RequestBody UserDto userDto) {
         manager.authenticate(
-                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+                new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
 
-        final String sessionId  = sessionRegistry.registerSession(user.getUsername());
+        final String sessionId  = sessionRegistry.registerSession(userDto.getUsername());
+        User user = new User();
         ResponseDto response = new ResponseDto();
-        response.setSessionId(sessionId);
-        response.setUsername(user.getUsername());
+        if(sessionId != null) {
+            user = userService.getCurrentUser(userDto.getUsername());
+
+            response.setSessionId(sessionId);
+            response.setUserId(user.getId());
+        }
+
         return ResponseEntity.ok(response);
     }
 
