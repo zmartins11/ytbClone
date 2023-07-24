@@ -37,6 +37,7 @@ public class AuthenticationController {
 
             response.setSessionId(sessionId);
             response.setUserId(user.getId());
+            response.setUsername(user.getUsername());
         }
 
         return ResponseEntity.ok(response);

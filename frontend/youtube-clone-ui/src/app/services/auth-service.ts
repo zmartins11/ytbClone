@@ -10,46 +10,52 @@ export class AuthService {
 
 
   isAuthenticated: boolean = false;
-    private username: string = '';
-    private userId: string = '';
+  private username: string = '';
+  private userId: string = '';
+  private sessionId: string = '';
 
-    authenticationStatusChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
+  constructor(private httpClient: HttpClient) { }
 
-  setAuthenticationStatus(status: boolean): void {
-    this.isAuthenticated = status;
-    this.authenticationStatusChanged.emit(status);
+  login(username: string, password: string): Observable<ResponseStatus> {
+    const body = {
+      username: username,
+      password: password
+    };
+    return this.httpClient.post<ResponseStatus>("http://localhost:9090/api/login", body);
   }
 
-    constructor(private httpClient : HttpClient) { }
+  loginUser(username: string, password: string) {
+    this.httpClient.get<ResponseStatus>("http://localhost:9090/api/login").subscribe(data => {
+      this.sessionId = data.sessionId;
+      this.userId = data.userId;
+    })
+  }
 
-    login(username : string, password :string): Observable<ResponseStatus> {
-        const body = {
-            username: username,
-            password: password
-          };
-        return this.httpClient.post<ResponseStatus>("http://localhost:9090/api/login", body);
-      }
+  logout(): void {
+    this.isAuthenticated = false;
+    this.username = '';
+    sessionStorage.clear();
+  }
 
-      logout(): void {
-        this.isAuthenticated = false;
-        this.username = '';
-        sessionStorage.clear();
-      }
+  subscribeToUser(userId: string): Observable<boolean> {
+    return this.httpClient.post<boolean>("http://localhost:9090/api/user/subscribe/" + userId, null);
+  }
 
 
-      setUsername(username: string): void {
-        this.username = username;
-      }
-    
-      getUsername(): string {
-        return this.username;
-      }
 
-      getUserId() : string {
-        return this.userId;
-      }
+  setUsername(username: string): void {
+    this.username = username;
+  }
 
-      setUserId(userId : string) : void {
-        this.userId = userId;
-      }
+  getUsername(): string {
+    return this.username;
+  }
+
+  getUserId(): string {
+    return this.userId;
+  }
+
+  setUserId(userId: string): void {
+    this.userId = userId;
+  }
 }

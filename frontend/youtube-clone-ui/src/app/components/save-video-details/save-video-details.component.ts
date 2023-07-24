@@ -8,6 +8,7 @@ import { VideoPlayerComponent } from '../video-player/video-player.component';
 import { VideoDto } from 'src/app/video-dto';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from 'src/app/services/auth-service';
 
 @Component({
   selector: 'app-save-video-details',
@@ -32,12 +33,14 @@ export class SaveVideoDetailsComponent implements OnInit {
   fileSelected = false;
   videoUrl! : string;
   thumbnailUrl! :string;
+  videoUserId! : string;
 
    
   constructor(private activatedRoute : ActivatedRoute,
      private videoService : VideoService,
      private matSnackBar: MatSnackBar,
-     private http : HttpClient) {
+     private http : HttpClient,
+     private authServive : AuthService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
     this.videoUrl = data.videoUrl;
@@ -100,7 +103,8 @@ export class SaveVideoDetailsComponent implements OnInit {
       "thumbnailUrl": this.thumbnailUrl,
       "likeCount": 0,
       "dislikeCount": 0,
-      "viewCount": 0
+      "viewCount": 0,
+      "videoUserId": this.authServive.getUsername()
     }
     this.videoService.saveVideo(videoMetadata).subscribe(data => {
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")

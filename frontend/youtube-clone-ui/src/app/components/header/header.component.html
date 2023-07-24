@@ -6,10 +6,10 @@
         <mat-icon>video_call</mat-icon>
       </button>
       <span> {{username}}</span>
-      <button mat-button routerLink="/login" *ngIf="!isAuthenticated && isNotLoginPage()">
+      <button mat-button routerLink="/login" *ngIf="!loggedIn()">
         Login
       </button>
-      <button mat-button routerLink="/login" *ngIf="isAuthenticated" (click)="logout()">
+      <button mat-button routerLink="/login" *ngIf="loggedIn()" (click)="onLogout()">
         Logout
       </button>
      

@@ -26,10 +26,10 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.model.username, this.model.password).subscribe(data => {
       if (data) {
         this.sessionId = data.sessionId;
-        this.authService.setAuthenticationStatus(true);
         this.authService.setUsername(this.model.username);
         this.authService.setUserId(data.userId);
-          console.log("sessiondId : " + this.sessionId);
+        this.authService.isAuthenticated = true;
+        console.log("sessiondId : " + this.sessionId);
         sessionStorage.setItem(
           'token',
           this.sessionId

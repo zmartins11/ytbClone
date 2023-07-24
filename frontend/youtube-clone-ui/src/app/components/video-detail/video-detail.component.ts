@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'angular-auth-oidc-client/lib/user-data/user.service';
+import { AuthService } from 'src/app/services/auth-service';
 import { VideoService } from 'src/app/services/video.service';
 
 @Component({
@@ -21,7 +23,8 @@ export class VideoDetailComponent implements OnInit {
   viewCount : number = 0;
 
   constructor(private activatedRoute:  ActivatedRoute,
-              private videoService: VideoService) {
+              private videoService: VideoService,
+              private authService : AuthService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
       this.videoUrl = data.videoUrl;
@@ -50,6 +53,11 @@ export class VideoDetailComponent implements OnInit {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
     });
+  }
+
+  subscribeToUser() {
+    let userId = this.authService.getUserId();
+    this.authService.subscribeToUser(userId)
   }
 
 }

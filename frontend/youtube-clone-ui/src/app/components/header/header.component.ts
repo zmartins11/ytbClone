@@ -18,33 +18,25 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.events.subscribe((val:any) => {
-      this.checkLoginStatus();
     })
     
   }
 
-  checkLoginStatus() {
-    this.username = this.authService.getUsername();
-    if(this.username != '') {
-      this.isAuthenticated = true;
-      this.userId = this.authService.getUserId();
-      console.log(this.username);
-      console.log(this.userId);
-    }
-
-   
-    
-  }
-
-  logout() {
+  onLogout() {
     this.route.events.subscribe((val:any) => {
     this.authService.logout();
-    this.isAuthenticated = false;
     })
   }
 
-  isNotLoginPage(): boolean {
-    return this.route.url !== '/login';
+  loggedIn(): boolean {
+    if (sessionStorage.getItem("token")) {
+      this.username = this.authService.getUsername();
+      return true;
+    } else {
+      return false;
+    }
   }
+
+ 
 
 }
