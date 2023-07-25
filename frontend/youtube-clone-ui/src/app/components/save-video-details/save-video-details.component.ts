@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatChipInputEvent } from '@angular/material/chips';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { VideoService } from 'src/app/services/video.service';
 import {MatSnackBar, MatSnackBarModule} from '@angular/material/snack-bar';
 import { VideoPlayerComponent } from '../video-player/video-player.component';
@@ -40,7 +40,8 @@ export class SaveVideoDetailsComponent implements OnInit {
      private videoService : VideoService,
      private matSnackBar: MatSnackBar,
      private http : HttpClient,
-     private authServive : AuthService) {
+     private authServive : AuthService,
+     private router : Router) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
     this.videoUrl = data.videoUrl;
@@ -104,11 +105,13 @@ export class SaveVideoDetailsComponent implements OnInit {
       "likeCount": 0,
       "dislikeCount": 0,
       "viewCount": 0,
-      "videoUserId": this.authServive.getUsername()
+      "userId": this.authServive.getUsername(),
+      "sessionId" : sessionStorage.getItem("token") || ''
     }
     this.videoService.saveVideo(videoMetadata).subscribe(data => {
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")
     })
+    this.router.navigateByUrl("/");
   }
 
 

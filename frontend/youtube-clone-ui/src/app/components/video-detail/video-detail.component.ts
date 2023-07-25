@@ -21,12 +21,19 @@ export class VideoDetailComponent implements OnInit {
   likeCount: number = 0;
   dislikeCount : number = 0;
   viewCount : number = 0;
+  sessionId! : string;
+  userId! : string;
+
+  showSubscribeButton : boolean = true;
+  showUnSubscribeButton : boolean = false;
+
 
   constructor(private activatedRoute:  ActivatedRoute,
               private videoService: VideoService,
               private authService : AuthService) {
     this.videoId = this.activatedRoute.snapshot.params['videoId'];
     this.videoService.getVideo(this.videoId).subscribe(data => {
+      console.log(data);
       this.videoUrl = data.videoUrl;
       this.videoTitle = data.title;
       this.videoDescription = data.description;
@@ -35,13 +42,23 @@ export class VideoDetailComponent implements OnInit {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
       this.viewCount = data.viewCount;
+      this.sessionId = sessionStorage.getItem("token") || '';
+      this.userId = data.userId;
+
+      if(this.authService.getUsername() == this.userId) {
+        this.showSubscribeButton = false;
+        this.showUnSubscribeButton = false;
+      }
       })
+      
    }
 
   ngOnInit(): void {
+   
   }
 
   likeVideo() {
+    console.log(this.userId);
     this.videoService.likeVideo(this.videoId).subscribe(data => {
       this.likeCount = data.likeCount;
       this.dislikeCount = data.dislikeCount;
@@ -56,8 +73,28 @@ export class VideoDetailComponent implements OnInit {
   }
 
   subscribeToUser() {
-    let userId = this.authService.getUserId();
-    this.authService.subscribeToUser(userId)
+ 
+   this.authService.subscribeToUser(this.userId).subscribe(data => {
+      this.showUnSubscribeButton = true;
+      this.showSubscribeButton = false;
+   });
   }
+
+  unSubscribeToUser() {
+    this.authService.unSubscribeToUser(this.userId).subscribe(data => {
+       this.showUnSubscribeButton = false;
+       this.showSubscribeButton = true;
+    });
+   }
+
+ /*  unSubscribeToUser() {
+  } */
+
+  /* showSubscribeButton() : boolean {
+   return this.authService.getUsername() != this.userId;
+  } */
+
+/*   showUnSubscribeButton() {
+  } */
 
 }

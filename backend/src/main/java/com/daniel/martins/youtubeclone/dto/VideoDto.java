@@ -16,6 +16,7 @@ import java.util.Set;
 public class VideoDto {
 
     private String id;
+    private String sessionId;
     private String title;
     private String description;
     private String userId;
@@ -26,7 +27,5 @@ public class VideoDto {
     private Integer likeCount;
     private Integer dislikeCount;
     private Integer viewCount;
-    private String videoUserId;
-
 
 }

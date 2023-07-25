@@ -67,8 +67,8 @@ public class UserService {
         currentUser.addToSubscribedToUsers(userId);
 
         //find the user that has been subscribed
-        User userSubscribed = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Cannot find user with userId " + userId));
-        userSubscribed.addToSubscribers(currentUser.getId());
+        User userSubscribed = userRepository.findByUsername(userId);
+        userSubscribed.addToSubscribers(currentUser.getUsername());
 
         //save the users
         userRepository.save(currentUser);
@@ -81,8 +81,8 @@ public class UserService {
         currentUser.removeFromSubscribedToUsers(userId);
 
         //find the user that has been subscribed
-        User userSubscribed = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Cannot find user with userId " + userId));
-        userSubscribed.removeFromSubscribers(currentUser.getId());
+        User userSubscribed = userRepository.findByUsername(userId);
+        userSubscribed.removeFromSubscribers(currentUser.getUsername());
 
         //save the users
         userRepository.save(currentUser);

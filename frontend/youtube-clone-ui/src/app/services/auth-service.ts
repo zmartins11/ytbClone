@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseStatus } from '../responseStatus';
@@ -15,6 +15,13 @@ export class AuthService {
   private sessionId: string = '';
 
   constructor(private httpClient: HttpClient) { }
+
+  private getRequestHeaders(): HttpHeaders {
+    const sessionId = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('sessionId', sessionId || '');
+    console.log(sessionId);
+    return headers;
+  }
 
   login(username: string, password: string): Observable<ResponseStatus> {
     const body = {
@@ -38,8 +45,15 @@ export class AuthService {
   }
 
   subscribeToUser(userId: string): Observable<boolean> {
-    return this.httpClient.post<boolean>("http://localhost:9090/api/user/subscribe/" + userId, null);
+    const headers = this.getRequestHeaders();
+    return this.httpClient.post<boolean>("http://localhost:9090/api/user/subscribe/" + userId, null,{headers : headers});
   }
+
+  unSubscribeToUser(userId: string): Observable<boolean> {
+    const headers = this.getRequestHeaders();
+    return this.httpClient.post<boolean>("http://localhost:9090/api/user/unSubscribe/" + userId, null,{headers : headers});
+  }
+
 
 
 

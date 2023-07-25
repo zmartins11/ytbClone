@@ -48,12 +48,16 @@ public class VideoService {
         //find the video by videoId
         Video savedVideo = getVideoById(videoDto.getId());
 
+
         //map the videoDto to video
         savedVideo.setTitle(videoDto.getTitle());
         savedVideo.setDescription(videoDto.getDescription());
         savedVideo.setTags(videoDto.getTags());
-        savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
+        if(savedVideo.getThumbnailUrl() == null) {
+            savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
+        }
         savedVideo.setVideoStatus(videoDto.getVideoStatus());
+        savedVideo.setUserId(videoDto.getUserId());
 
         //save video
         videoRepository.save(savedVideo);
@@ -159,6 +163,7 @@ public class VideoService {
         videoDto.setLikeCount(videoById.getLikes().get());
         videoDto.setDislikeCount(videoById.getDislikes().get());
         videoDto.setViewCount(videoById.getViewCount().get());
+        videoDto.setUserId(videoById.getUserId());
         return videoDto;
     }
 

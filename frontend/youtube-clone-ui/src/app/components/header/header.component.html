@@ -1,8 +1,10 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row>
-      <span>Youtube Clone</span>
+      <span>
+        <a routerLink="/">Youtube Clone</a>
+      </span>
       <span class="example-spacer"></span>
-      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+      <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" routerLink="/upload-video">
         <mat-icon>video_call</mat-icon>
       </button>
       <span> {{username}}</span>

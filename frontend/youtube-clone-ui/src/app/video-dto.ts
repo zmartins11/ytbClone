@@ -1,5 +1,6 @@
 export interface VideoDto {
     id : string;
+    sessionId : string;
     title : string ;
     description : string;
     tags : Array<string>;
@@ -9,5 +10,5 @@ export interface VideoDto {
     likeCount: number;
     dislikeCount: number; 
     viewCount: number;
-    videoUserId : string;
+    userId : string;
 }
