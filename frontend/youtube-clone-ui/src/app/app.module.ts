@@ -38,6 +38,7 @@ import { MatListModule } from '@angular/material/list';
 import { FeaturedComponent } from './components/featured/featured.component';
 import { VideoCardComponent } from './components/video-card/video-card.component';
 import { MatCardModule } from '@angular/material/card';
+import { CommentsComponent } from './components/comments/comments.component';
 
 
 
@@ -55,7 +56,8 @@ import { MatCardModule } from '@angular/material/card';
     SidebarComponent,
     SubscriptionsComponent,
     FeaturedComponent,
-    VideoCardComponent
+    VideoCardComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

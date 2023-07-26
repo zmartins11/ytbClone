@@ -77,7 +77,7 @@ public class VideoService {
         return thumbnailUrl;
     }
 
-    Video getVideoById(String videoId) {
+    public Video getVideoById(String videoId) {
         //find the video by videoId
         return  videoRepository.findById(videoId)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find video by Id -" + videoId));
@@ -151,7 +151,7 @@ public class VideoService {
         return mapToVideoDto(videoById);
     }
 
-    private static VideoDto mapToVideoDto(Video videoById) {
+    public static VideoDto mapToVideoDto(Video videoById) {
         VideoDto videoDto = new VideoDto();
         videoDto.setVideoUrl(videoById.getVideoUrl());
         videoDto.setThumbnailUrl(videoById.getThumbnailUrl());

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ResponseStatus } from '../responseStatus';
+import { VideoDto } from '../video-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,11 @@ export class AuthService {
   unSubscribeToUser(userId: string): Observable<boolean> {
     const headers = this.getRequestHeaders();
     return this.httpClient.post<boolean>("http://localhost:9090/api/user/unSubscribe/" + userId, null,{headers : headers});
+  }
+
+  userHistory(userId: string): Observable<Array<VideoDto>> {
+    const headers = this.getRequestHeaders();
+    return this.httpClient.get<Array<VideoDto>>("http://localhost:9090/api/user/" + userId + "/history", {headers : headers});
   }
 
 

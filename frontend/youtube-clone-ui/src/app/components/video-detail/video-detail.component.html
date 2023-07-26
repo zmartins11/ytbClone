@@ -24,7 +24,7 @@
         </div>
         <mat-divider></mat-divider>
         <mat-card-header>
-          <mat-card-title>Daniel</mat-card-title>
+          <mat-card-title>{{userId}}</mat-card-title>
           <mat-card-subtitle class="subtitles">4.2K Subscribers</mat-card-subtitle>
           <button *ngIf="showSubscribeButton" class="subscribe-button" mat-raised-button color="warn"
                   (click)="subscribeToUser()">SUBSCRIBE
@@ -42,7 +42,7 @@
           <mat-chip>Angular</mat-chip>
         </mat-chip-list>
         <mat-divider></mat-divider>
-        <!--<app-comments *ngIf="videoAvailable" [videoId]="videoId"></app-comments> -->
+        <app-comments [videoId]="videoId"></app-comments>
       </div>
     </div>
     <div fxFlex="5%"></div>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth-service';
+import { VideoDto } from 'src/app/video-dto';
 
 @Component({
   selector: 'app-history',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HistoryComponent implements OnInit {
 
-  constructor() { }
+  username!: string;
+  videoHistory: Array<VideoDto> = [];
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
+    this.username = this.authService.getUsername();
+    this.authService.userHistory(this.username).subscribe(data =>{
+      this.videoHistory = data;
+    })
   }
 
 }
