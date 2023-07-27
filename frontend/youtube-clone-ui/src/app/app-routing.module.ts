@@ -10,9 +10,11 @@ import { SubscriptionsComponent } from './components/subscriptions/subscriptions
 import { HistoryComponent } from './components/history/history.component';
 import { LikedVideosComponent } from './components/liked-videos/liked-videos.component';
 import { FeaturedComponent } from './components/featured/featured.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 const routes: Routes = [
+  {path : 'register', component: RegisterComponent},
     {path:'', component: HomeComponent, children: [
       {path:'subscriptions', component: SubscriptionsComponent},
       {path:'history', component: HistoryComponent},
@@ -24,10 +26,11 @@ const routes: Routes = [
     {path:'upload-video', component: UploadVideoComponent}, 
     {path:'save-video-details/:videoId', component: SaveVideoDetailsComponent},
     {path:'video-details/:videoId', component: VideoDetailComponent},
-    
   ]}
   
-];
+]; 
+
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

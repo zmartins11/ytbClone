@@ -39,6 +39,7 @@ import { FeaturedComponent } from './components/featured/featured.component';
 import { VideoCardComponent } from './components/video-card/video-card.component';
 import { MatCardModule } from '@angular/material/card';
 import { CommentsComponent } from './components/comments/comments.component';
+import { RegisterComponent } from './components/register/register.component';
 
 
 
@@ -57,7 +58,8 @@ import { CommentsComponent } from './components/comments/comments.component';
     SubscriptionsComponent,
     FeaturedComponent,
     VideoCardComponent,
-    CommentsComponent
+    CommentsComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

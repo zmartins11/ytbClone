@@ -14,16 +14,14 @@ export class AuthenticationGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-      if(state.url == "" || state.url == "/login") {
-        return true;
-      }
-
       let token = sessionStorage.getItem("token");
-
-      if(!token) {
-        console.log('sem token');
+      if(state.url == "" || state.url == "/login" || state.url == "/register") {
+        if(!token) {
+          return true;
+        }
+       
+      }
         return this.router.navigate(['/home']);
-    }
     return true;
   }
   
