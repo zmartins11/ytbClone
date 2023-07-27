@@ -17,4 +17,10 @@ export class CommentsService {
   getAllComments(videoId: string): Observable<Array<CommentDto>> {
    return this.httpClient.get<CommentDto[]>("http://localhost:9090/api/videos/" + videoId + "/comment")
   }
+
+  //    @PostMapping("/{videoId}/deleteComment/{commentId}")
+  deleteComment(commentDto : any):Observable<any> {
+    return this.httpClient.post<any>("http://localhost:9090/api/videos/deleteComment", commentDto);
+  }
+
 }

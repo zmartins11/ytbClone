@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommentDto } from 'src/app/comment-dto';
 import { AuthService } from 'src/app/services/auth-service';
 import { CommentsService } from 'src/app/services/comments.service';
+import { formatDistanceToNow } from 'date-fns';
 
 @Component({
   selector: 'app-comments',
@@ -16,6 +17,7 @@ export class CommentsComponent implements OnInit {
   videoId : string = "";
   commentsForm: FormGroup; 
   commentsDto : CommentDto[] = [];
+  showDeleteButton : boolean = false;
 
   constructor(private authService: AuthService,
             private commentService : CommentsService,
@@ -49,7 +51,28 @@ export class CommentsComponent implements OnInit {
   getAllComments() {
     this.commentService.getAllComments(this.videoId).subscribe(data =>{
       this.commentsDto = data;
+
+      this.commentsDto.forEach((comment) => {
+        comment.showDeleteButton = this.authService.getUsername() === comment.authorId;
+        comment.relativeTime = this.getRelativeTime(comment.createdAt)
+      });
     });
+  }
+
+  deleteComment(comment : any) {
+    console.log(comment);
+    this.commentService.deleteComment(comment).subscribe(data => {
+      if (data) {
+        this.matSnackBar.open("Comment deleted Successufully", "OK");
+        this.getAllComments();
+      }
+    });
+
+  }
+
+  getRelativeTime(createdAt: string): string {
+    const timeAgo = formatDistanceToNow(new Date(createdAt), { addSuffix: true });
+    return timeAgo;
   }
 
 }

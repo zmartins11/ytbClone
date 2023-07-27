@@ -106,7 +106,8 @@ export class SaveVideoDetailsComponent implements OnInit {
       "dislikeCount": 0,
       "viewCount": 0,
       "userId": this.authServive.getUsername(),
-      "sessionId" : sessionStorage.getItem("token") || ''
+      "sessionId" : sessionStorage.getItem("token") || '',
+      "createdAt" : ""
     }
     this.videoService.saveVideo(videoMetadata).subscribe(data => {
       this.matSnackBar.open("Video Metadata Updated successfully", "OK")

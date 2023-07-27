@@ -23,6 +23,7 @@
     "@angular/router": "^14.0.0",
     "@videogular/ngx-videogular": "^7.0.1",
     "angular-auth-oidc-client": "14.1.5",
+    "date-fns": "^2.30.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

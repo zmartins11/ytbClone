@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -27,5 +28,6 @@ public class VideoDto {
     private Integer likeCount;
     private Integer dislikeCount;
     private Integer viewCount;
+    private LocalDateTime createdAt;
 
 }

@@ -1,0 +1,21 @@
+/* Add your custom CSS styles */
+.video-history-item {
+    display: flex;
+    align-items: center;
+  }
+  
+  .thumbnail {
+    width: 120px;
+    margin-right: 12px;
+  }
+  
+  .thumbnail img {
+    width: 100%;
+    height: auto;
+  }
+  
+  .video-info {
+    display: flex;
+    flex-direction: column;
+  }
+  

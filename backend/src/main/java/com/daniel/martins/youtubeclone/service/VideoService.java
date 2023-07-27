@@ -5,13 +5,21 @@ import com.daniel.martins.youtubeclone.dto.UploadVideoResponse;
 import com.daniel.martins.youtubeclone.dto.VideoDto;
 import com.daniel.martins.youtubeclone.model.Comment;
 import com.daniel.martins.youtubeclone.model.Video;
+import com.daniel.martins.youtubeclone.repository.CommentRepository;
 import com.daniel.martins.youtubeclone.repository.VideoRepository;
 import com.daniel.martins.youtubeclone.session.SessionRegistry;
+import com.mongodb.BasicDBObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class VideoService {
@@ -20,13 +28,17 @@ public class VideoService {
     private final VideoRepository videoRepository;
     private final UserService userService;
     private final SessionRegistry sessionRegistry;
+    private final CommentRepository commentRepository;
+    private final MongoOperations mongoOperations;
 
     @Autowired
-    public VideoService(S3Service s3Service, VideoRepository videoRepository, UserService userService, SessionRegistry sessionRegistry) {
+    public VideoService(S3Service s3Service, VideoRepository videoRepository, UserService userService, SessionRegistry sessionRegistry, CommentRepository commentRepository, MongoOperations mongoOperations) {
         this.s3Service = s3Service;
         this.videoRepository = videoRepository;
         this.userService = userService;
         this.sessionRegistry = sessionRegistry;
+        this.commentRepository = commentRepository;
+        this.mongoOperations = mongoOperations;
     }
 
     public UploadVideoResponse uploadVideo(MultipartFile multipartFile) {
@@ -37,6 +49,7 @@ public class VideoService {
 
         var video = new Video();
         video.setVideoUrl(videoUrl);
+        video.setCreatedAt(LocalDateTime.now());
 
         Video savedVideo = videoRepository.save(video);
 
@@ -53,7 +66,7 @@ public class VideoService {
         savedVideo.setTitle(videoDto.getTitle());
         savedVideo.setDescription(videoDto.getDescription());
         savedVideo.setTags(videoDto.getTags());
-        if(savedVideo.getThumbnailUrl() == null) {
+        if (savedVideo.getThumbnailUrl() == null) {
             savedVideo.setThumbnailUrl(videoDto.getThumbnailUrl());
         }
         savedVideo.setVideoStatus(videoDto.getVideoStatus());
@@ -79,7 +92,7 @@ public class VideoService {
 
     public Video getVideoById(String videoId) {
         //find the video by videoId
-        return  videoRepository.findById(videoId)
+        return videoRepository.findById(videoId)
                 .orElseThrow(() -> new IllegalArgumentException("Cannot find video by Id -" + videoId));
     }
 
@@ -105,10 +118,10 @@ public class VideoService {
         //get user from sessionId
         String currentUser = sessionRegistry.getUsernameForSession(sessionId);
 
-        if(userService.ifLikedVideo(videoId, currentUser)) {
+        if (userService.ifLikedVideo(videoId, currentUser)) {
             videoById.decrementLikes();
             userService.removeFromLikedVideos(videoId, currentUser);
-        } else if(userService.ifDislikeVideo(videoId, currentUser)) {
+        } else if (userService.ifDislikeVideo(videoId, currentUser)) {
             videoById.decrementDisLikes();
             userService.removeFromDislikesVideos(videoId, currentUser);
             videoById.incrementLikes();
@@ -125,7 +138,6 @@ public class VideoService {
     }
 
 
-
     public VideoDto dislikeVideo(String videoId, String sessionId) {
 
         //get video by id
@@ -133,10 +145,10 @@ public class VideoService {
 
         String currentUser = sessionRegistry.getUsernameForSession(sessionId);
 
-        if(userService.ifDislikeVideo(videoId, currentUser)) {
+        if (userService.ifDislikeVideo(videoId, currentUser)) {
             videoById.decrementDisLikes();
             userService.removeFromDislikesVideos(videoId, currentUser);
-        } else if(userService.ifLikedVideo(videoId, currentUser)) {
+        } else if (userService.ifLikedVideo(videoId, currentUser)) {
             videoById.decrementLikes();
             userService.removeFromLikedVideos(videoId, currentUser);
             videoById.incrementDisLikes();
@@ -164,6 +176,7 @@ public class VideoService {
         videoDto.setDislikeCount(videoById.getDislikes().get());
         videoDto.setViewCount(videoById.getViewCount().get());
         videoDto.setUserId(videoById.getUserId());
+        videoDto.setCreatedAt(videoById.getCreatedAt());
         return videoDto;
     }
 
@@ -172,6 +185,10 @@ public class VideoService {
         Comment comment = new Comment();
         comment.setText(commentDto.getCommentText());
         comment.setAuthorId(commentDto.getAuthorId());
+        comment.setVideoId(videoId);
+        comment.setCreatedAt(LocalDateTime.now());
+
+        commentRepository.save(comment);
 
         video.addComment(comment);
         videoRepository.save(video);
@@ -188,8 +205,11 @@ public class VideoService {
 
     private CommentDto mapToCommentDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
+        commentDto.setId(comment.getId());
         commentDto.setCommentText(comment.getText());
         commentDto.setAuthorId(comment.getAuthorId());
+        commentDto.setVideoId(comment.getVideoId());
+        commentDto.setCreatedAt(comment.getCreatedAt());
         return commentDto;
 
     }
@@ -197,4 +217,29 @@ public class VideoService {
     public List<VideoDto> getAllVideos() {
         return videoRepository.findAll().stream().map(VideoService::mapToVideoDto).toList();
     }
+
+    public void deleteComment(CommentDto comment) {
+
+
+        Optional<Comment> optionalComment = commentRepository.findById(comment.getId());
+
+        if (optionalComment.isPresent()) {
+            commentRepository.deleteById(comment.getId());
+
+            //delete comments in video
+            Video videoById = getVideoById(comment.getVideoId());
+            videoById.getCommentList().removeIf(commentI -> commentI.getId().equals(comment.getId()));
+            videoRepository.save(videoById);
+        }
+    }
+
+    private void deleteCommentById(String videoId, String commentId) {
+        // Construct the query to remove the comment by its id from the 'comments' list
+        Query query = new Query(Criteria.where("_id").is(videoId).and("comments._id").is(commentId));
+        Update update = new Update().pull("comments", new BasicDBObject("_id", commentId));
+
+        // Perform the update operation
+        mongoOperations.updateFirst(query, update, Video.class);
+    }
+
 }

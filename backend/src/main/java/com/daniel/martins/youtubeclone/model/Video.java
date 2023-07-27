@@ -1,11 +1,13 @@
 package com.daniel.martins.youtubeclone.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -30,6 +32,8 @@ public class Video {
     private AtomicInteger viewCount = new AtomicInteger(0);
     private String thumbnailUrl;
     private List<Comment> commentList = new CopyOnWriteArrayList<>();
+    @JsonFormat(pattern = "MMM dd, yyyy")
+    private LocalDateTime createdAt;
 
     public void incrementLikes() {
         likes.incrementAndGet();

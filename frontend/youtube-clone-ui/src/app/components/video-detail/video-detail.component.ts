@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserService } from 'angular-auth-oidc-client/lib/user-data/user.service';
 import { AuthService } from 'src/app/services/auth-service';
 import { VideoService } from 'src/app/services/video.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-video-detail',
@@ -23,6 +24,7 @@ export class VideoDetailComponent implements OnInit {
   viewCount : number = 0;
   sessionId! : string;
   userId! : string;
+  createdAt! : string;
 
   showSubscribeButton : boolean = true;
   showUnSubscribeButton : boolean = false;
@@ -44,6 +46,7 @@ export class VideoDetailComponent implements OnInit {
       this.viewCount = data.viewCount;
       this.sessionId = sessionStorage.getItem("token") || '';
       this.userId = data.userId;
+      this.createdAt = this.formatDate(data.createdAt);
 
       if(this.authService.getUsername() == this.userId) {
         this.showSubscribeButton = false;
@@ -87,14 +90,10 @@ export class VideoDetailComponent implements OnInit {
     });
    }
 
- /*  unSubscribeToUser() {
-  } */
+   formatDate(createdAt: string): string {
+    return format(new Date(createdAt), 'MMM dd, yyyy');
+  }
 
-  /* showSubscribeButton() : boolean {
-   return this.authService.getUsername() != this.userId;
-  } */
-
-/*   showUnSubscribeButton() {
-  } */
+ 
 
 }
